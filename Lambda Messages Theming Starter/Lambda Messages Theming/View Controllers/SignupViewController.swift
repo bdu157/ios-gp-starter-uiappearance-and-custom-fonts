@@ -16,6 +16,8 @@ class SignupViewController: UIViewController {
         guard AuthenticationHelper.currentUser != nil else { return }
         
         performSegue(withIdentifier: "ViewMessageList", sender: nil)
+        
+        setupAppearances()
     }
     
     @IBAction func signUp(_ sender: Any) {
@@ -25,6 +27,14 @@ class SignupViewController: UIViewController {
         
         performSegue(withIdentifier: "ViewMessageList", sender: nil)
     }
+    
+    private func setupAppearances() {
+        self.view.backgroundColor = AppearanceHelper.backgroundGray
+        usernameTextField.font = AppearanceHelper.typerighterFont(with: .callout, pointSize: 28)
+        AppearanceHelper.style(button: signupButton)
+    }
+    
+    
     
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var usernameTextField: UITextField!
