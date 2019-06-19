@@ -19,8 +19,11 @@ class MessageListViewController: UIViewController, UITableViewDelegate, UITableV
         NotificationCenter.default.addObserver(self, selector: #selector(sortMessageArray), name: messagesWereUpdatedNotification, object: nil)
         
         messageController.fetchMessages()
+        
+        self.setupAppearances()
     }
     
+
     @objc private func sortMessageArray() {
         switch messageSortSegmentedControl.selectedSegmentIndex {
         case 0:
@@ -49,9 +52,34 @@ class MessageListViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.textLabel?.text = message.text
         cell.detailTextLabel?.text = message.sender
+        self.style(cell: cell)
         
         return cell
     }
+    
+    private func style(cell: UITableViewCell) {
+            cell.textLabel?.font = AppearanceHelper.typerighterFont(with: .caption1, pointSize: 30)
+            cell.detailTextLabel?.font = AppearanceHelper.typerighterFont(with: .caption2, pointSize: 25)
+        
+            cell.textLabel?.backgroundColor = .clear
+            cell.detailTextLabel?.backgroundColor = .clear
+        
+            cell.textLabel?.textColor = .white
+            cell.detailTextLabel?.textColor = .white
+        
+            cell.backgroundColor = AppearanceHelper.backgroundGray
+    }
+    
+    private func setupAppearances() {
+        self.view.backgroundColor = AppearanceHelper.backgroundGray
+        self.tableView.backgroundColor = AppearanceHelper.backgroundGray
+        self.tableView.tableHeaderView?.backgroundColor = AppearanceHelper.backgroundGray
+        
+        AppearanceHelper.style(button: newMessageButton)
+        newMessageButton.layer.cornerRadius = newMessageButton.frame.width / 2
+        newMessageButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    }
+    
 
     let messageController = MessageController()
     
